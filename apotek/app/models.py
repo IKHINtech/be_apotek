@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.validators import validate_email
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
-
+from django.contrib.auth.models import UserManager, AbstractUser
 import uuid
 # Create your models here.
 
@@ -49,12 +50,11 @@ class WorkerRole(BaseEntryModel):
         constraints = [models.UniqueConstraint(fields=['worker', 'role'], name='unique_worker_role')]
 
 
-class Worker(User):
-    password = models.CharField(max_length=255)
-    last_login_at = models.DateTimeField(null=True, blank=True)
+class Worker(AbstractUser):
+    address = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=15, null=True, default=None, blank=True)
     roles = models.ManyToManyField(to=Role, through=WorkerRole,
                                    through_fields=('worker', 'role'), related_name='workers')
-
 
 class Supplier(User):
     city = models.CharField(max_length=255)
