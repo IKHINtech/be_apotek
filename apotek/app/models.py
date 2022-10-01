@@ -1,9 +1,9 @@
-from django.db import models
-from django.core.validators import validate_email
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
-
-from django.contrib.auth.models import UserManager, AbstractUser
 import uuid
+
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import validate_email
+from django.db import models
+
 # Create your models here.
 
 
