@@ -1,7 +1,8 @@
 from apotek.app.models import Supplier
-from rest_framework.serializers import ModelSerializer
+from apotek.app.serializers.base_models_serializer import BaseModelSerializer
 
-class SupplierSerializer(ModelSerializer):
+
+class SupplierSerializer(BaseModelSerializer):
     class Meta:
         model = Supplier
         fields = '__all__'
