@@ -29,9 +29,9 @@ class User(BaseEntryModel):
     email = models.EmailField(unique=True, validators=[validate_email])
     is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(
-        'self', related_name='user_createdby', null=True, on_delete=models.SET_NULL)
+        'Worker', related_name='user_createdby', null=True, on_delete=models.SET_NULL)
     updated_by = models.ForeignKey(
-        'self', related_name='user_updatedby', null=True, on_delete=models.SET_NULL)
+        'Worker', related_name='user_updatedby', null=True, on_delete=models.SET_NULL)
 
 
 class Role(BaseFieldModel):
@@ -51,10 +51,12 @@ class WorkerRole(BaseEntryModel):
 
 
 class Worker(AbstractUser):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
     address = models.CharField(max_length=255, null=True)
     phone = models.CharField(max_length=15, null=True, default=None, blank=True)
     roles = models.ManyToManyField(to=Role, through=WorkerRole,
                                    through_fields=('worker', 'role'), related_name='workers')
+
 
 class Supplier(User):
     city = models.CharField(max_length=255)

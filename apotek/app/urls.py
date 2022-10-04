@@ -6,6 +6,7 @@ from apotek.app.views.product_category_viewset import ProductCategoryViewSet
 from apotek.app.views.product_detail_viewset import ProductDetailViewSet
 from apotek.app.views.product_variant_viewset import ProductVariantViewSet
 from apotek.app.views.product_views import ProductViewSet
+from apotek.app.views.role_views import RoleViewSet
 from apotek.app.views.supplier_serializer import SupplierViewSet
 from apotek.app.views.unit_viewsets import ProductUnitViewSet
 
@@ -20,11 +21,13 @@ router.register('product-detail', ProductDetailViewSet)
 router.register('product-unit', ProductUnitViewSet)
 router.register('product-variant', ProductVariantViewSet)
 router.register('supplier', SupplierViewSet)
+router.register('role', RoleViewSet)
+
 
 router.register('worker', WorkerViewSet)
 
 
 urlpatterns = [
     re_path('', include('apotek.app.views.auth.urls')),
-       re_path('', include(router.urls)),
+    re_path('', include(router.urls)),
 ]
