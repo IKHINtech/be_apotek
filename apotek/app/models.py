@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_email
 from django.db import models
 
+from apotek.app import serializers
+
 # Create your models here.
 
 
@@ -35,6 +37,7 @@ class User(BaseEntryModel):
 
 
 class Role(BaseFieldModel):
+    is_active = models.BooleanField(default=True)
     name = models.CharField(max_length=50, unique=True)
 
 
@@ -79,16 +82,19 @@ class Customer(User):
 
 class Product(BaseEntryModel):
     name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
     category = models.ForeignKey('ProductCategory', on_delete=models.RESTRICT)
 
 
 class ProductCategory(BaseEntryModel):
     name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
     description = models.TextField(null=True)
 
 
 class ProductVariant(BaseEntryModel):
     name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
     product = models.ForeignKey(Product, on_delete=models.RESTRICT)
     supplier = models.ForeignKey(Supplier, on_delete=models.RESTRICT)
     unit = models.ForeignKey('ProductUnit', on_delete=models.RESTRICT)
@@ -96,6 +102,7 @@ class ProductVariant(BaseEntryModel):
 
 class ProductUnit(BaseEntryModel):
     name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
 
 
 class ProductDetail(BaseEntryModel):
@@ -107,3 +114,4 @@ class ProductDetail(BaseEntryModel):
     dicount = models.IntegerField(null=True)
     barcode = models.CharField(null=True, max_length=255)
     final_price = models.DecimalField(max_digits=19, decimal_places=2, null=True, blank=True)
+    is_active = models.BooleanField(default=True)

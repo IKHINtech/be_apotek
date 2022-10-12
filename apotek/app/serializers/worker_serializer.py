@@ -5,9 +5,10 @@ from apotek.app.serializers.role_serializer import RoleSerializer
 
 
 class WorkerSerializer(serializers.ModelSerializer):
-    role = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all(), many=True, write_only=True, source='roles')
+    role = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all(
+    ), many=True, write_only=True, source='roles', required=False)
     roles = RoleSerializer(many=True, read_only=True)
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = Worker

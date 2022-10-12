@@ -5,5 +5,5 @@ from apotek.app.models import Role
 
 
 class RoleViewSet(BaseModelViewSet):
-    queryset = Role.objects.all()
+    queryset = Role.objects.filter(is_active=True)
     serializer_class = RoleSerializer
