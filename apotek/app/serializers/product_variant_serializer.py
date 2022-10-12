@@ -37,3 +37,14 @@ class ProductVariantSerializer(serializers.ModelSerializer):
             ProductDetail.objects.create(product_variant=variant, **detail)
 
         return variant
+
+
+class ProductVariantListSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(read_only=True, source='product.name')
+    category = serializers.CharField(read_only=True, source='product.category.name')
+    unit_name = serializers.CharField(read_only=True, source='unit.name')
+    supplier_name = serializers.CharField(read_only=True, source='supplier.name')
+
+    class Meta:
+        model = ProductVariant
+        fields = '__all__'
