@@ -1,8 +1,11 @@
+from itertools import product
 import uuid
 
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 from django.core.validators import validate_email
 from django.db import models
+from decimal import Decimal
 
 from apotek.app import serializers
 
@@ -115,3 +118,23 @@ class ProductDetail(BaseEntryModel):
     barcode = models.CharField(null=True, max_length=255)
     final_price = models.DecimalField(max_digits=19, decimal_places=2, null=True, blank=True)
     is_active = models.BooleanField(default=True)
+
+class PaymentMethod(BaseEntryModel):
+    name = models.CharField(max_length= 60)
+
+
+class Transcation(BaseEntryModel):
+    customer = models.ForeignKey(to=Customer, on_delete=models.RESTRICT)
+    transaction_date = models.DateTimeField(auto_now=True)
+    worker  = models.ForeignKey(to=Worker, on_delete=models.RESTRICT)
+    total = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
+    bayar = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
+    kemnbali = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
+    payment_method = models.ForeignKey(to=PaymentMethod, on_delete=models.RESTRICT)
+
+class TransactionDetail(BaseEntryModel):
+    transaction = models.ForeignKey(to=Transcation, on_delete=models.RESTRICT)
+    product_variant = models.ForeignKey(to=ProductVariant, on_delete=models.RESTRICT)
+    quantity =  models.IntegerField(validators=[MinValueValidator(1)])
+    price = models.DecimalField(max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
+
