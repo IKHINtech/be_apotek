@@ -14,5 +14,5 @@ class ProductDetailListSerializer(serializers.ModelSerializer):
     product_variant_id = serializers.PrimaryKeyRelatedField(queryset=ProductVariant.objects.all(), write_only=True, source='product_variant')
     class Meta:
         model = ProductDetail
-        fields = '__all__'
+        exclude = ['product_variant']
     

@@ -19,9 +19,9 @@ class ProductVariantSerializer(serializers.ModelSerializer):
     unit_id = serializers.PrimaryKeyRelatedField(queryset=ProductUnit.objects.all(), write_only=True, source='unit')
     details = ProductVariantDetailSerializer(many=True, write_only=True)
 
-    product = ProducSerializers(read_only=True)
-    supplier = SupplierSerializer(read_only=True)
-    unit = ProductUnitSerializer(read_only=True)
+    product = ProducSerializers(read_only=True, required=False)
+    supplier = SupplierSerializer(read_only=True, required=False)
+    unit = ProductUnitSerializer(read_only=True, required=False)
 
     class Meta:
         model = ProductVariant
@@ -47,4 +47,4 @@ class ProductVariantListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductVariant
-        fields = '__all__'
+        exclude = ['product', 'supplier', 'unit']

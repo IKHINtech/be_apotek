@@ -9,7 +9,7 @@ class ProductVariantViewSet(BaseModelViewSet):
     serializer_class = ProductVariantListSerializer
 
     def get_serializer_class(self):
-        if self.action.lower() == 'retrieve':
+        if self.action.lower() in ['retrieve', 'create']:
             self.serializer_class = ProductVariantSerializer
         return self.serializer_class
 
